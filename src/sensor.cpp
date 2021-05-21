@@ -22,7 +22,6 @@ void htu21dSensorHeater(SensorData getSensorData) {
 }
 
 SensorData getSensorData() {
-  htu21d.softReset();
   float temperature = htu21d.readTemperature();
   SensorData getSensorData{
       .temperature = temperature,
@@ -32,10 +31,12 @@ SensorData getSensorData() {
 
   htu21dSensorHeater(getSensorData);
 
-  //   Serial.println("Getting sensor data: ");
-  //   Serial.println(getSensorData.temperature);
-  //   Serial.println(getSensorData.humidity);
-  //   Serial.println(getSensorData.humidityAsInt);
+  // htu21d.softReset();
+
+  Serial.println("Getting sensor data: ");
+  Serial.println(getSensorData.temperatureAsInt);
+  Serial.println(getSensorData.humidity);
+  Serial.println(getSensorData.humidityAsInt);
 
   return getSensorData;
 }

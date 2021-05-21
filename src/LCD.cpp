@@ -50,7 +50,7 @@ void displayTimeOnLCD(DateTime time) {
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Time : ");
-  lcd.print(time.hour() + HOURS_OFFSET);
+  lcd.print(time.hour() +HOURS_OFFSET);
   lcd.print(":");
   lcd.print(time.minute());
   lcd.print(":");

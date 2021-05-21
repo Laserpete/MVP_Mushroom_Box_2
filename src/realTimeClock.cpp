@@ -12,11 +12,13 @@ void setupClock() {
   rtc.disable32K();
   rtc.disableAlarm(1);
   rtc.disableAlarm(2);
-
-  if (rtc.lostPower()) {
-    Serial.println("RTC lost power, let's set the time");
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  }
+  // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  /*
+    if (rtc.lostPower()) {
+      Serial.println("RTC lost power, let's set the time");
+      rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    }
+    */
 }
 
 void checkTimeAtInterval();

@@ -1,11 +1,11 @@
-/* Controller for MVP Mushroom Box.
+/* Controller for MVP Mushroom Box 2.
 
   Featrues include heated wick humidifier and LED lights and LCD display
 
   LEDs controlled by real time clock, humidifier controlled by feedback loop
   from HTU21D
 
-  Max current draw is 3.3 amps
+  Max current draw for version 1 was 3.3 amps
 
 */
 
@@ -19,7 +19,7 @@ unsigned long lastLoop = 0;
 bool humidifierIsOn;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   setupClock();
   setupHumidifier();
   setupLEDstrips();
@@ -29,8 +29,6 @@ void setup() {
 
 void loop() {
   if (millis() >= (lastLoop + LOOP_TIME)) {
-    // Bind snip tool to key to prove that PC is better than mac
-
     // State machine image on discord chat with Tim
 
     // Implement noblocking sunrise & sunset
@@ -40,6 +38,7 @@ void loop() {
     // Should I start the sunrise?
     // If it is started, andf it is time, call sunrise and increment
     // sunrise(getSunState());
+
     lastLoop = millis();
     SensorData sensorData = getSensorData();
     DateTime dateTime = getCurrentTimeFromRTC();

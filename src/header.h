@@ -1,13 +1,23 @@
 #include <RTClib.h>
 
-#define LED_STRIP_PIN 6
-#define HEATED_WICK_PIN 5
+#define LED_STRIP_PIN 2
+#define UV_STRIP_PIN 4
+#define LED_STRIP_CHANNEL 0
+
+#define HEATED_WICK_PIN 15
+
+#define EXTRA_OPTOCOUPLED_PIN 13
+
+#define SPEAKER_PIN 25
+#define SPEAKER_CHANNEL 1
+
+#define MAX_LIGHT_LEVEL 255
 
 #define HUMIDITY_SETTING 90
 
-#define HOURS_OFFSET 1
+#define HOURS_OFFSET 0
 
-#define SUN_ITERATION_TIME 1000
+#define SUN_ITERATION_TIME 10
 
 #define DISPLAY_TOGGLE_TIME 10000
 
@@ -48,3 +58,6 @@ void dayNight(bool);
 void setupClock();
 void checkTimeAtInterval();
 DateTime getCurrentTimeFromRTC();
+
+void setupSpeaker();
+void playMusic();

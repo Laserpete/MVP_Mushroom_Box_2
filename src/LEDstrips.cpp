@@ -5,8 +5,9 @@
 bool sunHasRisen, sunHasSet, dayTime = false;
 
 void setupLEDstrips() {
-  pinMode(LED_STRIP_PIN, OUTPUT);
-  digitalWrite(LED_STRIP_PIN, LOW);
+  ledcSetup(LED_STRIP_CHANNEL, 1000, 8);
+  ledcAttachPin(LED_STRIP_PIN, LED_STRIP_CHANNEL);
+  ledcAttachPin(UV_STRIP_PIN, LED_STRIP_CHANNEL);
   Serial.println("LED strips setup");
 }
 
@@ -37,7 +38,7 @@ void sunrise() {
 
     do {
       sunLevel++;
-      // analogWrite(LED_STRIP_PIN, sunLevel);
+      ledcWrite(LED_STRIP_CHANNEL, sunLevel);
       Serial.println(sunLevel);
       delay(SUN_ITERATION_TIME);
       displaySunriseOnLCD();
@@ -60,7 +61,7 @@ void sunset() {
 
     do {
       sunLevel--;
-      // analogWrite(LED_STRIP_PIN, sunLevel);
+      ledcWrite(LED_STRIP_CHANNEL, sunLevel);
       Serial.println(sunLevel);
       delay(SUN_ITERATION_TIME);
       displaySunsetOnLCD();
@@ -75,11 +76,11 @@ void sunset() {
 
 void dayNight(bool dayTime) {
   if (dayTime == true) {
-    digitalWrite(LED_STRIP_PIN, HIGH);
+    ledcWrite(LED_STRIP_CHANNEL, MAX_LIGHT_LEVEL);
     Serial.println("It is now day time");
   }
   if (dayTime == false) {
-    digitalWrite(LED_STRIP_PIN, LOW);
+    ledcWrite(LED_STRIP_CHANNEL, 0);
     Serial.println("It is now night time");
   }
 }
