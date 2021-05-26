@@ -32,7 +32,7 @@ void loop() {
   if (dateTime.unixtime() >= (lastLoop + LOOP_ITERATION_TIME)) {
     lastLoop = dateTime.unixtime();
 
-    DateTime dateTime = getCurrentTimeFromRTC();
+    serialPrintCurrentTime(dateTime);
     setLEDBrightness(getSunBrightness(dateTime));
 
     SensorData sensorData = getSensorData();

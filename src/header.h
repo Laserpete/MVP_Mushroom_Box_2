@@ -57,8 +57,8 @@ int getSunBrightness(DateTime);
 void setLEDBrightness(int);
 
 void setupClock();
-void checkTimeAtInterval();
 DateTime getCurrentTimeFromRTC();
+void serialPrintCurrentTime(DateTime now);
 
 void setupSpeaker();
 void playMusic();

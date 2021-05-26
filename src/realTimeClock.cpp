@@ -25,11 +25,14 @@ void checkTimeAtInterval();
 
 DateTime getCurrentTimeFromRTC() {
   DateTime now = rtc.now();
+  return now;
+}
+
+void serialPrintCurrentTime(DateTime now) {
   Serial.print("Current time is ");
   Serial.print(now.hour() + HOURS_OFFSET);
   Serial.print(":");
   Serial.print(now.minute());
   Serial.print(":");
   Serial.println(now.second());
-  return now;
 }
