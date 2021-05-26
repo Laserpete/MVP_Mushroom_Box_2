@@ -14,7 +14,7 @@
 
 #include "header.h"
 
-#define LOOP_TIME 1000
+#define LOOP_ITERATION_TIME 1
 unsigned long lastLoop = 0;
 bool humidifierIsOn;
 
@@ -28,22 +28,14 @@ void setup() {
 }
 
 void loop() {
-  if (millis() >= (lastLoop + LOOP_TIME)) {
-    // State machine image on discord chat with Tim
+  DateTime dateTime = getCurrentTimeFromRTC();
+  if (dateTime.unixtime() >= (lastLoop + LOOP_ITERATION_TIME)) {
+    lastLoop = dateTime.unixtime();
 
-    // Implement noblocking sunrise & sunset
-    // int brightness = getSunBrightness(time, lastTimeChanged,
-    // currentSunBrightness); setBrightness(brightness)
-
-    // Should I start the sunrise?
-    // If it is started, and if it is time, call sunrise and increment
-    // sunrise(getSunState());
-
-    lastLoop = millis();
-    SensorData sensorData = getSensorData();
     DateTime dateTime = getCurrentTimeFromRTC();
+    setLEDBrightness(getSunBrightness(dateTime));
 
-    dayNight(timeControlLEDstrips(dateTime));
+    SensorData sensorData = getSensorData();
     humidifierIsOn = controlHumidifier(sensorData);
     whatToDisplayOnLCD(sensorData, dateTime, humidifierIsOn);
   }

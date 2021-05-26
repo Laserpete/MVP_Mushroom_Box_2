@@ -3,6 +3,7 @@
 #include "header.h"
 
 bool sunHasRisen, sunHasSet, dayTime = false;
+int lastLEDStripChangeTime = 0;
 
 void setupLEDstrips() {
   ledcSetup(LED_STRIP_CHANNEL, 1000, 8);
@@ -10,77 +11,48 @@ void setupLEDstrips() {
   ledcAttachPin(UV_STRIP_PIN, LED_STRIP_CHANNEL);
   Serial.println("LED strips setup");
 }
+int determineSunriseTime() {
+  return (12 - (HOURS_OF_LIGHT / 2) + DAYTIME_OFFSET);
+}
 
-bool timeControlLEDstrips(DateTime now) {
-  int timeControl = now.hour() + HOURS_OFFSET;
+int determineSunsetTime() {
+  return (12 + (HOURS_OF_LIGHT / 2) + DAYTIME_OFFSET);
+}
 
-  if (timeControl == SUNRISE_TIME) {
-    sunrise();
-  }
-  if (timeControl == SUNSET_TIME) {
-    sunset();
-  }
-  if ((timeControl >= SUNRISE_TIME) && (timeControl <= SUNSET_TIME)) {
-    return dayTime = true;
-  } else if ((timeControl >= SUNSET_TIME) || (timeControl <= SUNRISE_TIME)) {
-    return dayTime = false;
+int getSunBrightness(DateTime now) {
+  static int currentBrightness;
+  // If it is time for sunrise, iterate the light level upwards
+  if (now.hour() == determineSunriseTime()) {
+    if (currentBrightness < MAXIMUM_LIGHT_LEVEL_PWM) {
+      currentBrightness++;
+      Serial.print("Sunrise ");
+      Serial.println(currentBrightness);
+      return currentBrightness;
+    } else {
+      return MAXIMUM_LIGHT_LEVEL_PWM;
+    }
+  } else if (now.hour() == determineSunsetTime()) {
+    if (currentBrightness > 0) {
+      currentBrightness--;
+      Serial.print("Sunset ");
+      Serial.println(currentBrightness);
+      return currentBrightness;
+    } else {
+      return 0;
+    }
+  } else if ((now.hour() < determineSunriseTime()) or
+             (now.hour() > determineSunsetTime())) {
+    Serial.println("Night Time");
+    currentBrightness = 0;
+    return currentBrightness;
+  } else if ((now.hour() > determineSunriseTime()) and
+             (now.hour() < determineSunsetTime())) {
+    Serial.println("Day Time");
+    currentBrightness = MAXIMUM_LIGHT_LEVEL_PWM;
+    return currentBrightness;
   }
 }
 
-void sunrise() {
-  sunHasSet = false;
-  int sunLevel = 0;
-
-  if (sunHasRisen == false) {
-    Serial.println("Sunrise");
-    sunHasRisen = true;
-    void displaySunriseOnLCD();
-
-    do {
-      sunLevel++;
-      ledcWrite(LED_STRIP_CHANNEL, sunLevel);
-      Serial.println(sunLevel);
-      delay(SUN_ITERATION_TIME);
-      displaySunriseOnLCD();
-      if (sunLevel == 255) {
-        Serial.println("Sunrise finished");
-        sunHasRisen = true;
-      }
-
-    } while (sunLevel <= 255);
-  }
-}
-
-void sunset() {
-  sunHasRisen = false;
-  int sunLevel = 255;
-
-  if (sunHasSet == false) {
-    Serial.println("Sunset");
-    sunHasSet = true;
-
-    do {
-      sunLevel--;
-      ledcWrite(LED_STRIP_CHANNEL, sunLevel);
-      Serial.println(sunLevel);
-      delay(SUN_ITERATION_TIME);
-      displaySunsetOnLCD();
-      if (sunLevel == 0) {
-        Serial.println("Sunset finished");
-        sunHasSet = true;
-      }
-
-    } while (sunLevel >= 1);
-  }
-}
-
-void dayNight(bool dayTime) {
-  if (dayTime == true) {
-    ledcWrite(LED_STRIP_CHANNEL, MAX_LIGHT_LEVEL);
-    Serial.println("It is now day time");
-  }
-  if (dayTime == false) {
-    ledcWrite(LED_STRIP_CHANNEL, 0);
-    Serial.println("It is now night time");
-  }
+void setLEDBrightness(int desiredBrightness) {
+  ledcWrite(LED_STRIP_CHANNEL, desiredBrightness);
 }

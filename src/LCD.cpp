@@ -21,7 +21,7 @@ void whatToDisplayOnLCD(SensorData sensorData, DateTime time,
   if (humidifierIsOn == true) {
     displayHumidifierStatusOnLCD(sensorData);
   } else {
-    if (millis() > (lastDisplayToggle + DISPLAY_TOGGLE_TIME)) {
+    if (millis() > (lastDisplayToggle + DISPLAY_SWITCH_TIME)) {
       lastDisplayToggle = millis();
       displayToggle = !displayToggle;
     }

@@ -8,6 +8,8 @@
 
 #define EXTRA_OPTOCOUPLED_PIN 13
 
+#define WS8212_PIN 27
+
 #define SPEAKER_PIN 25
 #define SPEAKER_CHANNEL 1
 
@@ -17,12 +19,11 @@
 
 #define HOURS_OFFSET 0
 
-#define SUN_ITERATION_TIME 10
+#define DISPLAY_SWITCH_TIME 10
 
-#define DISPLAY_TOGGLE_TIME 10000
-
-#define SUNRISE_TIME 8
-#define SUNSET_TIME 20
+#define MAXIMUM_LIGHT_LEVEL_PWM 255
+#define HOURS_OF_LIGHT 12
+#define DAYTIME_OFFSET 0
 
 typedef struct _SensorData {
   float temperature;
@@ -50,10 +51,10 @@ void setupHumidifier();
 bool controlHumidifier(SensorData);
 
 void setupLEDstrips();
-bool timeControlLEDstrips(DateTime);
-void sunrise();
-void sunset();
-void dayNight(bool);
+int determineSunriseTime();
+int determineSunsetTime();
+int getSunBrightness(DateTime);
+void setLEDBrightness(int);
 
 void setupClock();
 void checkTimeAtInterval();
@@ -61,3 +62,5 @@ DateTime getCurrentTimeFromRTC();
 
 void setupSpeaker();
 void playMusic();
+
+void setupWS8212LEDs();
