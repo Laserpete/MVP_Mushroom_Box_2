@@ -36,7 +36,7 @@ void loop() {
     // currentSunBrightness); setBrightness(brightness)
 
     // Should I start the sunrise?
-    // If it is started, andf it is time, call sunrise and increment
+    // If it is started, and if it is time, call sunrise and increment
     // sunrise(getSunState());
 
     lastLoop = millis();
