@@ -4,9 +4,9 @@
 #define UV_STRIP_PIN 4
 #define LED_STRIP_CHANNEL 0
 
-#define HEATED_WICK_PIN 15
+#define HUMIDIFIER_PIN 15
 
-#define EXTRA_OPTOCOUPLED_PIN 13
+#define FAN_PIN 13
 
 #define WS8212_PIN 27
 

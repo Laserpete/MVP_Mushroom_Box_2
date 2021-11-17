@@ -84,5 +84,5 @@ void displayHumidifierStatusOnLCD(SensorData sensorData) {
   lcd.print(sensorData.humidityAsInt);
   lcd.print(" % RH");
   lcd.setCursor(0, 1);
-  lcd.print("Vernebler ist ein");
+  lcd.print("Vernebler ein");
 }
