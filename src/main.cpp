@@ -5,7 +5,8 @@
   LEDs controlled by real time clock, humidifier controlled by feedback loop
   from HTU21D
 
-  Max current draw for version 1 was 3.3 amps
+  Max current draw for version 1 was 3.3 amps (Heated wick)
+  Current power draw measured at PSU output is 12V 2.3A
 
 */
 
@@ -22,6 +23,7 @@ void setup() {
   Serial.begin(115200);
   setupClock();
   setupHumidifier();
+  setupFan();
   setupLEDstrips();
   setupLCD();
   setupHTU21D();
