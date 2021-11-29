@@ -27,18 +27,6 @@ void whatToDisplayOnLEDs(SensorData SensorData, bool humidifierIsOn) {
   }
 }
 
-void humidifyLightshowLEDs() {
-  ChangePalettePeriodically();
-
-  static uint8_t startIndex = 0;
-  startIndex = startIndex + 1;  // motion speed
-
-  FillLEDsFromPaletteColours(startIndex);
-  FastLED.show();
-}
-
-void steadyLightShowLEDs() {}
-
 void FillLEDsFromPaletteColours(uint8_t colourIndex) {
   uint8_t brightness = 255;
   for (int i = 0; i < NUM_LEDS; ++i) {
@@ -141,4 +129,20 @@ void ChangePalettePeriodically() {
     currentPalette = myRedWhiteBluePalette_p;
     currentBlending = LINEARBLEND;
   }
+}
+
+void humidifyLightshowLEDs() {
+  ChangePalettePeriodically();
+
+  static uint8_t startIndex = 0;
+  startIndex = startIndex + 1;  // motion speed
+
+  FillLEDsFromPaletteColours(startIndex);
+  FastLED.show();
+}
+
+void steadyLightShowLEDs() {
+  SetupPurpleAndGreenPalette();
+  FillLEDsFromPaletteColours(1);
+  FastLED.show();
 }

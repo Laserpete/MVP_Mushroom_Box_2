@@ -23,7 +23,7 @@
 
 #define WS2812_PIN 27
 #define NUM_LEDS 29
-#define BRIGHTNESS 64
+#define BRIGHTNESS 32
 #define LED_TYPE WS2812
 #define COLOUR_ORDER GRB
 #define UPDATES_PER_SECOND 100
