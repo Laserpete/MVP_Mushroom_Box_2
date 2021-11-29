@@ -22,6 +22,11 @@
 #define FAN_PWM_RESOLUTION 8
 
 #define WS2812_PIN 27
+#define NUM_LEDS 29
+#define BRIGHTNESS 64
+#define LED_TYPE WS2812
+#define COLOUR_ORDER GRB
+#define UPDATES_PER_SECOND 100
 
 #define SPEAKER_PIN 25
 #define SPEAKER_CHANNEL 4
@@ -69,6 +74,11 @@ void setupSpeaker();
 void playMusic();
 
 void setupWS2812LEDs();
+void whatToDisplayOnLEDs(SensorData, bool);
+void humidifyLightshowLEDs();
+void steadyLightShowLEDs();
+void FillLEDsFromPaletteColours(uint8_t);
+void ChangePalettePeriodically();
 
 void setupFan();
 void setFanSpeed(int);

@@ -27,17 +27,21 @@ void setup() {
   setupLEDstrips();
   setupLCD();
   setupHTU21D();
+  setupWS2812LEDs();
 }
 
 void loop() {
   DateTime dateTime = getCurrentTimeFromRTC();
+  SensorData sensorData;
+  whatToDisplayOnLEDs(sensorData, humidifierIsOn);
+
   if (dateTime.unixtime() >= (lastLoop + LOOP_ITERATION_TIME)) {
     lastLoop = dateTime.unixtime();
+    sensorData = getSensorData();
 
     serialPrintCurrentTime(dateTime);
     setLEDBrightness(getSunBrightness(dateTime));
 
-    SensorData sensorData = getSensorData();
     humidifierIsOn = controlHumidifier(sensorData);
     whatToDisplayOnLCD(sensorData, dateTime, humidifierIsOn);
   }
