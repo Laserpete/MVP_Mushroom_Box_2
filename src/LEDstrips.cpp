@@ -8,7 +8,7 @@ int lastLEDStripChangeTime = 0;
 void setupLEDstrips() {
   ledcSetup(LED_STRIP_CHANNEL, LED_STRIP_FREQUENCY, LED_STRIP_RESOLUTION);
   ledcAttachPin(LED_STRIP_PIN, LED_STRIP_CHANNEL);
-  // ledcAttachPin(UV_STRIP_PIN, LED_STRIP_CHANNEL);
+  ledcAttachPin(UV_STRIP_PIN, LED_STRIP_CHANNEL);
   Serial.println("LED strips setup");
 }
 int determineSunriseTime() {
