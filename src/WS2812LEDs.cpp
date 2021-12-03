@@ -142,7 +142,9 @@ void humidifyLightshowLEDs() {
 }
 
 void steadyLightShowLEDs() {
+  static uint8_t startIndex = 0;
+  startIndex = startIndex + 1;
   SetupPurpleAndGreenPalette();
-  FillLEDsFromPaletteColours(1);
+  FillLEDsFromPaletteColours(startIndex);
   FastLED.show();
 }
